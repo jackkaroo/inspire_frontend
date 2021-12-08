@@ -1,16 +1,29 @@
-const users = [
-  {
-    "id": 1,
-    "email": "katya@gmail.com",
-    "password": "ipz-4"
-  }
-]
+import {API_URL} from "../index";
 
-export const authorizeUser = (email, password) => {
-  const user = users.find(user => user.email === email);
-  if (user && user.password === password) {
-    window.localStorage.setItem('user', user.id)
-    return true;
-  }
-  return false;
+export const authorizeUser = async (data) => {
+  const url = `${API_URL}/login`;
+
+  const response = await fetch(url, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(data),
+  });
+
+  return response.json();
+}
+
+export const createUser = async (data) => {
+  const url = `${API_URL}/register`;
+
+  const response = await fetch(url, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(data),
+  });
+
+  return response.json();
 }
