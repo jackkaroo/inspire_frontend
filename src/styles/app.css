@@ -1,0 +1,80 @@
+.app_wrapper {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 50px;
+    font-family: 'Helvetica', san-serif;
+}
+
+.flex {
+    display: flex;
+    align-items: center;
+}
+
+.user_header {
+    padding-bottom: 20px;
+    max-width: 500px;
+    margin: 0 auto;
+    font-size: 24px;
+}
+
+.user_avatar {
+    width: 100px;
+    height: 100px;
+    margin-right: 50px;
+}
+
+.user_followers {
+    width: 36px;
+    height: 36px;
+    margin-right: 20px;
+}
+
+.user_name {
+    font-size: 36px;
+    color: #000000;
+    padding-bottom: 20px;
+}
+
+.add_challenge_button {
+    margin-top: 20px;
+}
+
+hr {
+    height: 3px;
+    background: black;
+    margin-bottom: 20px;
+}
+
+.challenge_wrapper {
+    box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.12), 0px 2px 2px rgba(0, 0, 0, 0.24);
+    border-radius: 2px;
+    height: 95px;
+    margin-bottom: 20px;
+    padding: 15px;
+    box-sizing: border-box;
+}
+
+.challenge_wrapper:hover {
+    background: rgba(192, 190, 190, 0.13);
+}
+
+.challenge_flex {
+    display: flex;
+    justify-content: space-between;
+    font-size: 16px;
+}
+
+.challenge_date {
+    font-size: 12px;
+    color: rgba(0, 0, 0, 0.5);
+}
+
+.challenge_icon {
+    width: 16px;
+    height: 16px;
+}
+
+.challenge_sub {
+    font-size: 14px;
+    padding-top: 15px;
+}
