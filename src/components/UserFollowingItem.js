@@ -1,14 +1,5 @@
-import React, {useEffect, useState} from 'react';
-import like from '../assets/images/like.png';
-import {API_URL} from "../index";
-
-const unfollow = async (whomId) => {
-    const url = `${API_URL}/followings/${whomId}`;
-    const data = await fetch(url, {
-        method: 'DELETE'
-    });
-    return data.json();
-}
+import React from 'react';
+import {unfollow} from "../services/api";
 
 export default function UserFollowingItem({props}) {
     const sendUnfollow = async () => {

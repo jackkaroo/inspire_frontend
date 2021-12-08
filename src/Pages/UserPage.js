@@ -3,10 +3,10 @@ import {useEffect, useState} from "react";
 import {Button, CircularProgress} from "@material-ui/core";
 import followers from '../assets/images/people_alt.png';
 import avatar from '../assets/images/avatar.png';
-import ChallengeItem from "../components/ChallangeItem";
 import {useHistory} from "react-router-dom";
 import {getChallengesData, getFollowingsData, getUserData, postChallenge} from "../services/api";
 import AddNewChallengeModal from "../components/AddNewChallengeModal";
+import ChallengeItem from "../components/ChallengeItem";
 
 export default function UserPage() {
   const [userData, setUserData] = useState({});

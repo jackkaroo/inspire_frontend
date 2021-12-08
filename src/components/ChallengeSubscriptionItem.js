@@ -1,14 +1,5 @@
-import React, {useEffect, useState} from 'react';
-import like from '../assets/images/like.png';
-import {API_URL} from "../index";
-
-const unsubscribe = async (challengeId) => {
-    const url = `${API_URL}/subscriptions/${challengeId}`;
-    const data = await fetch(url, {
-        method: 'DELETE'
-    });
-    return data.json();
-}
+import React from 'react';
+import {unsubscribe} from "../services/api";
 
 const getDate = (dateCreated) => {
     const date1 = new Date(dateCreated);

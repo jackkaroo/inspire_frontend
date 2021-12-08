@@ -60,3 +60,39 @@ export const getSubchallengesData = async (userId, challengeId) => {
   });
   return data.json();
 };
+
+export const unfollow = async (whomId) => {
+  const url = `${API_URL}/followings/${whomId}`;
+  const data = await fetch(url, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': 'Basic ' + localStorage.getItem('token')
+    },
+  });
+  return data.json();
+}
+
+export const unsubscribe = async (challengeId) => {
+  const url = `${API_URL}/subscriptions/${challengeId}`;
+  const data = await fetch(url, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': 'Basic ' + localStorage.getItem('token')
+    },
+  });
+  return data.json();
+}
+
+export const getSubscriptionsData = async (userId) => {
+  const url = `${API_URL}/subscriptions?userId=${userId}`;
+  const data = await fetch(url, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': 'Basic ' + localStorage.getItem('token')
+    },
+  });
+  return data.json();
+}
