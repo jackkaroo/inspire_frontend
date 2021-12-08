@@ -10,3 +10,4 @@ ReactDOM.render(
   document.getElementById('root')
 );
 
+export const API_URL = 'http://192.168.31.110:3000';

@@ -1,15 +1,13 @@
 import React from 'react';
 import {useEffect, useState} from "react";
-import {Button, CircularProgress} from "@material-ui/core";
+import {Button, CircularProgress, Input, InputLabel, Modal} from "@material-ui/core";
 import followers from '../assets/images/people_alt.png';
 import avatar from '../assets/images/avatar.png';
 import ChallengeItem from "../components/ChallangeItem";
-const API_URL = 'http://192.168.31.110:3000';
+import {API_URL} from "../index";
 
 const getUserData = async (userId) => {
   const url = `${API_URL}/users/${userId}`;
-  console.log(API_URL);
-  console.log(url);
   const data = await fetch(url);
   return data.json();
 };
@@ -20,12 +18,56 @@ const getFollowingsData = async (userId) => {
   return data.json();
 };
 
+const getChallengesData = async (userId) => {
+  const url = `${API_URL}/challenges?userId=${userId}&&parentId=null`;
+  const data = await fetch(url);
+  return data.json();
+};
+
+const postChallenge = async (data = {}) => {
+  const url = `${API_URL}/challenges`;
+  const response = await fetch(url, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(data),
+  });
+  return response.json();
+}
+
 export default function UserPage() {
   const [userData, setUserData] = useState({});
-  const [followingData, setFollowingData] = useState({});
+  const [followingData, setFollowingData] = useState([]);
+  const [challengesData, setChallengesData] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [open, setOpen] = React.useState(false);
+  const [values, setValues] = useState({
+    title: '',
+    desc: '',
+  });
 
   const userId = window.localStorage.getItem('user');
+
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+
+  const handleChange = (prop) => (event) => {
+    setValues({ ...values, [prop]: event.target.value });
+  };
+
+  const submitAnswer = () => {
+    if (!values.title || !values.desc) {
+      return alert('Enter valid');
+    }
+
+    postChallenge( { title: values.title, description: values.desc })
+      .then(data => {
+        console.log(data);
+      });
+
+    handleClose();
+  };
 
   useEffect(() => {
     setLoading(true);
@@ -44,6 +86,14 @@ export default function UserPage() {
       })
       .catch(() => console.log('Something goes wrong..'))
   }, []);
+
+  useEffect(() => {
+    getChallengesData(userId)
+      .then((data) => {
+        return setChallengesData(data);
+      })
+      .catch(() => console.log('Something goes wrong..'))
+  }, [challengesData]);
 
   return (
     <>
@@ -64,14 +114,44 @@ export default function UserPage() {
                 </div>
               </div>
               <div className="add_challenge_button">
-                <Button variant="contained" color="primary">Add new challenge</Button>
+                <Button variant="contained" color="primary" onClick={handleOpen}>Add new challenge</Button>
               </div>
+              <Modal
+                open={open}
+                onClose={handleClose}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+              >
+                <div className="modal_wrapper">
+                  <h1>Add new challenge</h1>
+                  <InputLabel htmlFor="standard-adornment-email" className='label'>Enter challenge title</InputLabel>
+                  <Input
+                    id="standard-adornment-email"
+                    type='text'
+                    value={values.email}
+                    onChange={handleChange('title')}
+                    className='input'
+                  />
+                  <InputLabel htmlFor="standard-adornment-email" className='label'>Enter challenge description</InputLabel>
+                  <Input
+                    id="standard-adornment-email"
+                    type='text'
+                    value={values.email}
+                    onChange={handleChange('desc')}
+                    className='input'
+                  />
+                  <div className="flex">
+                    <Button variant="contained" color="primary" onClick={submitAnswer}>Add challenge</Button>
+                    <Button variant="outlined" color="secondary" onClick={handleClose}>Close</Button>
+                  </div>
+                </div>
+              </Modal>
             </div>
             <hr/>
-            <ChallengeItem />
-            <ChallengeItem />
-            <ChallengeItem />
-            <ChallengeItem />
+            {
+              challengesData && challengesData.map((challenge) =>
+                <ChallengeItem key={challenge.id} challenge={challenge} userId={userId} />)
+            }
           </div>
         )
       }
