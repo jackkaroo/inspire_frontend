@@ -7,7 +7,6 @@ import {validateEmail, validatePassword} from "../utils/validation";
 import {authorizeUser} from "../services/authorizeUser";
 import {useHistory} from "react-router-dom";
 
-
 export default function LoginPage() {
   const [values, setValues] = useState({
     showPassword: false,

@@ -149,6 +149,9 @@ export default function UserPage() {
             </div>
             <hr/>
             {
+            console.log(challengesData)
+            }
+            {
               challengesData && challengesData.map((challenge) =>
                 <ChallengeItem key={challenge.id} challenge={challenge} userId={userId} />)
             }
