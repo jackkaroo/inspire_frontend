@@ -1,7 +1,7 @@
 import {Button, Input, InputLabel, Modal} from "@material-ui/core";
 import React from "react";
 
-export default function AddNewChallengeModal({open, handleClose, values, handleChange, submitAnswer}) {
+export default function AddNewChallengeModal({open, handleClose, values, handleChange, submitAnswer, challengeType}) {
   return (
     <Modal
       open={open}
@@ -10,8 +10,8 @@ export default function AddNewChallengeModal({open, handleClose, values, handleC
       aria-describedby="modal-modal-description"
     >
       <div className="modal_wrapper">
-        <h1>Add new challenge</h1>
-        <InputLabel htmlFor="standard-adornment-email" className='label'>Enter challenge title</InputLabel>
+        <h1>Add new {challengeType}</h1>
+        <InputLabel htmlFor="standard-adornment-email" className='label'>Enter {challengeType} title</InputLabel>
         <Input
           id="standard-adornment-email"
           type='text'
@@ -19,7 +19,7 @@ export default function AddNewChallengeModal({open, handleClose, values, handleC
           onChange={handleChange('title')}
           className='input'
         />
-        <InputLabel htmlFor="standard-adornment-email" className='label'>Enter challenge description</InputLabel>
+        <InputLabel htmlFor="standard-adornment-email" className='label'>Enter {challengeType} description</InputLabel>
         <Input
           id="standard-adornment-email"
           type='text'
@@ -28,7 +28,7 @@ export default function AddNewChallengeModal({open, handleClose, values, handleC
           className='input'
         />
         <div className="flex btn_modal_wrapper">
-          <Button variant="contained" color="primary" onClick={submitAnswer}>Add challenge</Button>
+          <Button variant="contained" color="primary" onClick={submitAnswer}>Add {challengeType}</Button>
           <div className="break" />
           <Button variant="outlined" color="secondary" onClick={handleClose}>Close</Button>
         </div>

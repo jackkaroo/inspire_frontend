@@ -34,7 +34,7 @@ export default function SignupPage() {
       .then((user) => {
         console.log(user);
         window.localStorage.setItem('user', user.id);
-        history.push("/user");
+        history.push("/login");
         return user;
       })
       .catch(() => alert('Incorrect login or password. Try again.'))

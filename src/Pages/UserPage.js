@@ -32,21 +32,23 @@ export default function UserPage() {
 
   const submitAnswer = () => {
     if (!values.title || !values.desc) {
-      return alert('Enter valid');
+      return alert('Enter valid values');
     }
 
     postChallenge( { title: values.title, description: values.desc })
       .then(data => {
-        console.log(data);
-      });
+        if (!data && !data.ok) {
+          throw new Error("HTTP status " + data.errors);
+        }
+          getChallengesData(userId)
+            .then((data) => {
+              return setChallengesData(data);
+            })
+            .catch(() => console.log('Something goes wrong..'))
 
-    getChallengesData(userId)
-      .then((data) => {
-        return setChallengesData(data);
+          handleClose();
       })
-      .catch(() => console.log('Something goes wrong..'))
-
-    handleClose();
+      .catch(() => console.log('Something goes wrong..'));
   };
 
   useEffect(() => {
@@ -110,12 +112,13 @@ export default function UserPage() {
                 values={values}
                 submitAnswer={submitAnswer}
                 open={open}
+                challengeType='subchallenge'
               />
             </div>
             <hr/>
             {
               Array.isArray(challengesData) && challengesData.length > 0 && challengesData.map((challenge) =>
-                <ChallengeItem key={challenge.id} challenge={challenge} userId={userId} />)
+                <ChallengeItem key={challenge.id} challenge={challenge} userId={userId}/>)
             }
           </div>
         )

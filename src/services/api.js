@@ -36,6 +36,18 @@ export const getChallengesData = async (userId) => {
   return data.json();
 };
 
+export const getChallenge = async (challengeId) => {
+  const url = `${API_URL}/challenges/${challengeId}`;
+  const data = await fetch(url, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': 'Basic ' + localStorage.getItem('token')
+    },
+  });
+  return data.json();
+};
+
 export const postChallenge = async (data = {}) => {
   const url = `${API_URL}/challenges`;
   const response = await fetch(url, {
@@ -49,8 +61,21 @@ export const postChallenge = async (data = {}) => {
   return response.json();
 }
 
-export const getSubchallengesData = async (userId, challengeId) => {
-  const url = `${API_URL}/challenges?userId=${userId}&&parentId=${challengeId}`;
+export const postSubchallenge = async (data = {}) => {
+  const url = `${API_URL}/challenges`;
+  const response = await fetch(url, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': 'Basic ' + localStorage.getItem('token')
+    },
+    body: JSON.stringify(data),
+  });
+  return response.json();
+}
+
+export const getSubchallengesData = async (challengeId) => {
+  const url = `${API_URL}/challenges?parentId=${challengeId}`;
   const data = await fetch(url, {
     method: 'GET',
     headers: {
@@ -87,6 +112,18 @@ export const unsubscribe = async (challengeId) => {
 
 export const getSubscriptionsData = async (userId) => {
   const url = `${API_URL}/subscriptions?userId=${userId}`;
+  const data = await fetch(url, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': 'Basic ' + localStorage.getItem('token')
+    },
+  });
+  return data.json();
+}
+
+export const getLikesByChallenge = async (challengeId) => {
+  const url = `${API_URL}/likes/${challengeId}`;
   const data = await fetch(url, {
     method: 'GET',
     headers: {

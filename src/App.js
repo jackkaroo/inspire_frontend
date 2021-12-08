@@ -5,6 +5,7 @@ import UserPage from "./Pages/UserPage";
 import SubscriptionsPage from "./Pages/SubscriptionsPage";
 import FollowingsPage from "./Pages/FollowingsPage";
 import SignupPage from "./Pages/SignupPage";
+import ChallengePage from "./Pages/ChallengePage";
 
 function App() {
     return (
@@ -17,6 +18,7 @@ function App() {
                     <Route path="/my-subscriptions" exact component={SubscriptionsPage}/>
                     <Route path="/my-followings" exact component={FollowingsPage}/>
                     <Route path="/signup" exact component={SignupPage} />
+                    <Route path="/challenge/:id" component={ChallengePage} />
                 </Switch>
             </Router>
         </div>

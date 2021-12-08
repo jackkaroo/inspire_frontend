@@ -1,39 +1,38 @@
 import React, {useEffect, useState} from 'react';
 import like from '../assets/images/like.png';
-import {getSubchallengesData} from "../services/api";
-
-const getDate = (dateCreated) => {
-  const date1 = new Date(dateCreated);
-  const date2 = new Date();
-
-  const diffTime = Math.abs(date2 - date1);
-  const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-
-  if (diffDays < 1) {
-    return Math.ceil(diffTime / (1000 * 60 * 60)) + ' hours ';
-  }
-
-  return diffDays + ' days ';
-}
+import {getSubchallengesData, getLikesByChallenge} from "../services/api";
+import {useHistory} from "react-router-dom";
+import {getDate} from "../utils/functions";
 
 export default function ChallengeItem({challenge}) {
   const [subchallengeData, setSubchallengeData] = useState([]);
+  const [likes, setLikes] = useState([]);
+  const history = useHistory();
+
 
   useEffect(() => {
-    getSubchallengesData(challenge.userId, challenge.id)
+    getSubchallengesData(challenge.id)
       .then((data) => {
         return setSubchallengeData(data);
       })
       .catch(() => console.log('Something goes wrong..'))
-  }, [challenge.userId, challenge.id]);
+  }, [challenge.id]);
+
+  useEffect(() => {
+    getLikesByChallenge(challenge.id)
+      .then((data) => {
+        if(Array.isArray(data)) return setLikes(data);
+      })
+      .catch(() => console.log('Something goes wrong..'))
+  }, [challenge.id]);
 
   return (
-    <div className="challenge_wrapper">
+    <div className="challenge_wrapper" onClick={() => history.push(`/challenge/${challenge.id}`)}>
       <div className="challenge_flex">
         <div>{challenge.title}</div>
-        <div>
+        <div className="flex">
           <img src={like} alt="" className="challenge_icon" />
-          11.7k
+          <div>{likes.length}</div>
         </div>
       </div>
       <div className="challenge_date">{getDate(challenge.createdAt)} ago</div>
