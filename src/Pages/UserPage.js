@@ -1,11 +1,12 @@
 import React from 'react';
 import {useEffect, useState} from "react";
-import {Button, CircularProgress, Input, InputLabel, Modal} from "@material-ui/core";
+import {Button, CircularProgress} from "@material-ui/core";
 import followers from '../assets/images/people_alt.png';
 import avatar from '../assets/images/avatar.png';
 import ChallengeItem from "../components/ChallangeItem";
 import {useHistory} from "react-router-dom";
 import {getChallengesData, getFollowingsData, getUserData, postChallenge} from "../services/api";
+import AddNewChallengeModal from "../components/AddNewChallengeModal";
 
 export default function UserPage() {
   const [userData, setUserData] = useState({});
@@ -95,46 +96,25 @@ export default function UserPage() {
                 <div><img src={avatar} alt="" className="user_avatar"/></div>
                 <div>
                   <div className="user_name">{userData.name}</div>
-                  <div className="flex"><img src={followers} alt="" className="user_followers"/> Followings: 0</div>
+                  <div className="flex"><img src={followers} alt="" className="user_followers"/>
+                    Followings: {followingData.length}
+                  </div>
                 </div>
               </div>
               <div className="add_challenge_button">
                 <Button variant="contained" color="primary" onClick={handleOpen}>Add new challenge</Button>
               </div>
-              <Modal
+              <AddNewChallengeModal
+                handleClose={handleClose}
+                handleChange={handleChange}
+                values={values}
+                submitAnswer={submitAnswer}
                 open={open}
-                onClose={handleClose}
-                aria-labelledby="modal-modal-title"
-                aria-describedby="modal-modal-description"
-              >
-                <div className="modal_wrapper">
-                  <h1>Add new challenge</h1>
-                  <InputLabel htmlFor="standard-adornment-email" className='label'>Enter challenge title</InputLabel>
-                  <Input
-                    id="standard-adornment-email"
-                    type='text'
-                    value={values.email}
-                    onChange={handleChange('title')}
-                    className='input'
-                  />
-                  <InputLabel htmlFor="standard-adornment-email" className='label'>Enter challenge description</InputLabel>
-                  <Input
-                    id="standard-adornment-email"
-                    type='text'
-                    value={values.email}
-                    onChange={handleChange('desc')}
-                    className='input'
-                  />
-                  <div className="flex">
-                    <Button variant="contained" color="primary" onClick={submitAnswer}>Add challenge</Button>
-                    <Button variant="outlined" color="secondary" onClick={handleClose}>Close</Button>
-                  </div>
-                </div>
-              </Modal>
+              />
             </div>
             <hr/>
             {
-              challengesData && challengesData.length > 0 && challengesData.map((challenge) =>
+              Array.isArray(challengesData) && challengesData.length > 0 && challengesData.map((challenge) =>
                 <ChallengeItem key={challenge.id} challenge={challenge} userId={userId} />)
             }
           </div>
