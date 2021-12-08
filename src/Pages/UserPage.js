@@ -1,40 +1,12 @@
 import React from 'react';
 import {useEffect, useState} from "react";
-import {Button, CircularProgress, Input, InputLabel, Modal} from "@material-ui/core";
+import {Button, CircularProgress} from "@material-ui/core";
 import followers from '../assets/images/people_alt.png';
 import avatar from '../assets/images/avatar.png';
 import ChallengeItem from "../components/ChallangeItem";
-import {API_URL} from "../index";
-
-const getUserData = async (userId) => {
-  const url = `${API_URL}/users/${userId}`;
-  const data = await fetch(url);
-  return data.json();
-};
-
-const getFollowingsData = async (userId) => {
-  const url = `${API_URL}/followings?whoId=${userId}`;
-  const data = await fetch(url);
-  return data.json();
-};
-
-const getChallengesData = async (userId) => {
-  const url = `${API_URL}/challenges?userId=${userId}&&parentId=null`;
-  const data = await fetch(url);
-  return data.json();
-};
-
-const postChallenge = async (data = {}) => {
-  const url = `${API_URL}/challenges`;
-  const response = await fetch(url, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(data),
-  });
-  return response.json();
-}
+import {useHistory} from "react-router-dom";
+import {getChallengesData, getFollowingsData, getUserData, postChallenge} from "../services/api";
+import AddNewChallengeModal from "../components/AddNewChallengeModal";
 
 export default function UserPage() {
   const [userData, setUserData] = useState({});
@@ -42,6 +14,8 @@ export default function UserPage() {
   const [challengesData, setChallengesData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = React.useState(false);
+  const history = useHistory();
+
   const [values, setValues] = useState({
     title: '',
     desc: '',
@@ -66,6 +40,12 @@ export default function UserPage() {
         console.log(data);
       });
 
+    getChallengesData(userId)
+      .then((data) => {
+        return setChallengesData(data);
+      })
+      .catch(() => console.log('Something goes wrong..'))
+
     handleClose();
   };
 
@@ -77,7 +57,7 @@ export default function UserPage() {
       })
       .catch(() => console.log('Something goes wrong..'))
       .finally(() => setLoading(false));
-  }, []);
+  }, [userId]);
 
   useEffect(() => {
     getFollowingsData(userId)
@@ -85,7 +65,7 @@ export default function UserPage() {
         return setFollowingData(data);
       })
       .catch(() => console.log('Something goes wrong..'))
-  }, []);
+  }, [userId]);
 
   useEffect(() => {
     getChallengesData(userId)
@@ -93,7 +73,13 @@ export default function UserPage() {
         return setChallengesData(data);
       })
       .catch(() => console.log('Something goes wrong..'))
-  }, [challengesData]);
+  }, [userId]);
+
+  useEffect(() => {
+    if (!localStorage.getItem("user")) {
+      history.push("/login")
+    }
+  },[history]);
 
   return (
     <>
@@ -110,49 +96,25 @@ export default function UserPage() {
                 <div><img src={avatar} alt="" className="user_avatar"/></div>
                 <div>
                   <div className="user_name">{userData.name}</div>
-                  <div className="flex"><img src={followers} alt="" className="user_followers"/> Followings: 0</div>
+                  <div className="flex"><img src={followers} alt="" className="user_followers"/>
+                    Followings: {followingData.length}
+                  </div>
                 </div>
               </div>
               <div className="add_challenge_button">
                 <Button variant="contained" color="primary" onClick={handleOpen}>Add new challenge</Button>
               </div>
-              <Modal
+              <AddNewChallengeModal
+                handleClose={handleClose}
+                handleChange={handleChange}
+                values={values}
+                submitAnswer={submitAnswer}
                 open={open}
-                onClose={handleClose}
-                aria-labelledby="modal-modal-title"
-                aria-describedby="modal-modal-description"
-              >
-                <div className="modal_wrapper">
-                  <h1>Add new challenge</h1>
-                  <InputLabel htmlFor="standard-adornment-email" className='label'>Enter challenge title</InputLabel>
-                  <Input
-                    id="standard-adornment-email"
-                    type='text'
-                    value={values.email}
-                    onChange={handleChange('title')}
-                    className='input'
-                  />
-                  <InputLabel htmlFor="standard-adornment-email" className='label'>Enter challenge description</InputLabel>
-                  <Input
-                    id="standard-adornment-email"
-                    type='text'
-                    value={values.email}
-                    onChange={handleChange('desc')}
-                    className='input'
-                  />
-                  <div className="flex">
-                    <Button variant="contained" color="primary" onClick={submitAnswer}>Add challenge</Button>
-                    <Button variant="outlined" color="secondary" onClick={handleClose}>Close</Button>
-                  </div>
-                </div>
-              </Modal>
+              />
             </div>
             <hr/>
             {
-            console.log(challengesData)
-            }
-            {
-              challengesData && challengesData.map((challenge) =>
+              Array.isArray(challengesData) && challengesData.length > 0 && challengesData.map((challenge) =>
                 <ChallengeItem key={challenge.id} challenge={challenge} userId={userId} />)
             }
           </div>

@@ -4,6 +4,7 @@ import LoginPage from "./Pages/LoginPage";
 import UserPage from "./Pages/UserPage";
 import SubscriptionsPage from "./Pages/SubscriptionsPage";
 import FollowingsPage from "./Pages/FollowingsPage";
+import SignupPage from "./Pages/SignupPage";
 
 function App() {
     return (
@@ -15,6 +16,7 @@ function App() {
                     <Route path="/user" exact component={UserPage}/>
                     <Route path="/my-subscriptions" exact component={SubscriptionsPage}/>
                     <Route path="/my-followings" exact component={FollowingsPage}/>
+                    <Route path="/signup" exact component={SignupPage} />
                 </Switch>
             </Router>
         </div>

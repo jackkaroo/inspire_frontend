@@ -1,12 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import like from '../assets/images/like.png';
-import {API_URL} from "../index";
-
-const getSubchallengesData = async (userId, challengeId) => {
-  const url = `${API_URL}/challenges?userId=${userId}&&parentId=${challengeId}`;
-  const data = await fetch(url);
-  return data.json();
-};
+import {getSubchallengesData} from "../services/api";
 
 const getDate = (dateCreated) => {
   const date1 = new Date(dateCreated);
@@ -31,7 +25,7 @@ export default function ChallengeItem({challenge}) {
         return setSubchallengeData(data);
       })
       .catch(() => console.log('Something goes wrong..'))
-  }, []);
+  }, [challenge.userId, challenge.id]);
 
   return (
     <div className="challenge_wrapper">
