@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {Button} from "@material-ui/core";
-import AddNewChallengeModal from "../components/AddNewChallengeModal";
+import AddNewChallengeModal from "../components/modals/AddNewChallengeModal";
 import {
   getChallenge,
   getLikesByChallenge,
@@ -17,7 +17,7 @@ export default function ChallengePage() {
   const [likes, setLikes] = useState([]);
 
   const [values, setValues] = useState({
-    title: '',
+    text: '',
     desc: '',
   });
 
@@ -58,7 +58,7 @@ export default function ChallengePage() {
         return setChallengeData(data);
       })
       .catch(() => console.log('Something goes wrong..'))
-  }, []);
+  }, [challengeId]);
 
   useEffect(() => {
     getSubchallengesData(challengeId)

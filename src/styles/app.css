@@ -130,7 +130,7 @@ hr {
 .subchallenge_wrapper {
     box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.12), 0px 2px 2px rgba(0, 0, 0, 0.24);
     border-radius: 2px;
-    height: 90px;
+    min-height: 90px;
     margin-bottom: 20px;
     padding: 15px;
     box-sizing: border-box;
@@ -148,4 +148,24 @@ hr {
     display: flex;
     justify-content: space-between;
     max-width: 300px;
+}
+
+.milestone_wrapper {
+    height: 40px;
+    border: 1px dotted black;
+    max-width: 500px;
+    margin: 10px 0;
+    padding: 10px 20px;
+}
+
+.or_link {
+    color: #4f9bbb;
+    margin-top: 10px;
+    text-decoration: none;
+}
+
+.challenge_posts {
+    padding-top: 7px;
+    text-decoration: underline;
+    cursor: pointer;
 }

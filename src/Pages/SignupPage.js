@@ -85,7 +85,7 @@ export default function SignupPage() {
             <Button variant="contained" color="primary" className="button" type="submit">
               Sign Up
             </Button>
-            <div><a href="/login">or login</a></div>
+            <a href="/login" className="or_link">or login</a>
           </form>
         </div>
     );

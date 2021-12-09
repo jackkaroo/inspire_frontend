@@ -5,7 +5,7 @@ import followers from '../assets/images/people_alt.png';
 import avatar from '../assets/images/avatar.png';
 import {useHistory} from "react-router-dom";
 import {getChallengesData, getFollowingsData, getUserData, postChallenge} from "../services/api";
-import AddNewChallengeModal from "../components/AddNewChallengeModal";
+import AddNewChallengeModal from "../components/modals/AddNewChallengeModal";
 import ChallengeItem from "../components/ChallengeItem";
 
 export default function UserPage() {

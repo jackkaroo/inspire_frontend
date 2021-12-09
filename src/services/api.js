@@ -133,3 +133,29 @@ export const getLikesByChallenge = async (challengeId) => {
   });
   return data.json();
 }
+
+
+export const postMilestone = async (data = {}) => {
+  const url = `${API_URL}/milestones`;
+  const response = await fetch(url, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': 'Basic ' + localStorage.getItem('token')
+    },
+    body: JSON.stringify(data),
+  });
+  return response.json();
+}
+
+export const getMilestonesData = async (challengeId) => {
+  const url = `${API_URL}/milestones?challengeId=${challengeId}`;
+  const data = await fetch(url, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': 'Basic ' + localStorage.getItem('token')
+    },
+  });
+  return data.json();
+};
