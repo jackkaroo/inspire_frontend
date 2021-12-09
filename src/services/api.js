@@ -101,7 +101,7 @@ export const unfollow = async (whomId) => {
 export const unsubscribe = async (challengeId) => {
   const url = `${API_URL}/subscriptions/${challengeId}`;
   const data = await fetch(url, {
-    method: 'GET',
+    method: 'DELETE',
     headers: {
       'Content-Type': 'application/json',
       'Authorization': 'Basic ' + localStorage.getItem('token')

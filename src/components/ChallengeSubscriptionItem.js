@@ -1,5 +1,6 @@
 import React from 'react';
 import {unsubscribe} from "../services/api";
+import {Button} from "@material-ui/core";
 
 const getDate = (dateCreated) => {
     const date1 = new Date(dateCreated);
@@ -15,21 +16,15 @@ const getDate = (dateCreated) => {
     return diffDays + ' days ';
 }
 
-export default function ChallengeSubscriptionItem({challenge}) {
-    const sendUnsubscribe = async () => {
-        await unsubscribe(challenge.id)
-    }
-
+export default function ChallengeSubscriptionItem({challenge, subscription, sendUnsubscribe}) {
     return (
-        <div className="challenge_wrapper">
+        <div className="challenge_sub_wrapper">
             <div className="challenge_flex">
                 <div>{challenge.title}</div>
                 <div>
-                    <button onClick={sendUnsubscribe}>Unsubscribe</button>
+                    <Button size="small" variant="contained" color="primary" onClick={() => sendUnsubscribe(subscription.challengeId)}>Unsubscribe</Button>
                 </div>
             </div>
-            <div className="challenge_date">{getDate(challenge.createdAt)} ago</div>
-            <div className="challenge_description">{challenge.description}</div>
         </div>
     )
 }
