@@ -66,6 +66,13 @@ hr {
     font-size: 16px;
 }
 
+.challeng_flex {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    font-size: 16px;
+}
+
 .challenge_date {
     font-size: 12px;
     color: rgba(0, 0, 0, 0.5);
@@ -147,7 +154,7 @@ hr {
 .challeng_name_wrapper {
     display: flex;
     justify-content: space-between;
-    max-width: 300px;
+    max-width: 500px;
 }
 
 .milestone_wrapper {
@@ -194,3 +201,6 @@ hr {
     text-decoration: underline;
 }
 
+.challeng_desc {
+    font-size:14px;
+}

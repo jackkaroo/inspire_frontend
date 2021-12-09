@@ -70,7 +70,7 @@ export default function SubchallengeItem({subchallenge}) {
 
   return (
     <div className="subchallenge_wrapper">
-      <div className="challenge_flex">
+      <div className="challeng_flex">
         <div>{subchallenge.title}</div>
         <div className="flex">
           <img src={like} alt="" className="challenge_icon" />
@@ -85,6 +85,7 @@ export default function SubchallengeItem({subchallenge}) {
           />
         </div>
       </div>
+      <div className="challeng_desc">{subchallenge.description}</div>
       <div className="challenge_date">{getDate(subchallenge.createdAt)} ago</div>
       <div className="challenge_posts" onClick={handleClickSub}><i>{Array.isArray(milestonesData) && milestonesData.length || 0} milestones</i></div>
 

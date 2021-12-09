@@ -5,7 +5,7 @@ export const getDate = (dateCreated) => {
   const diffTime = Math.abs(date2 - date1);
   const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
 
-  if (diffDays < 1) {
+  if (diffDays < 2) {
     return Math.ceil(diffTime / (1000 * 60 * 60)) + ' hours ';
   }
 
