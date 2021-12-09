@@ -169,3 +169,28 @@ hr {
     text-decoration: underline;
     cursor: pointer;
 }
+
+.header {
+    position: fixed;
+    top: 0;
+    right: 50px;
+}
+
+.header_list {
+    display: flex;
+}
+
+.header_list li {
+    margin-right: 30px;
+    list-style-type: none;
+}
+
+.header_list li a {
+    text-decoration: none;
+    color: black;
+}
+
+.header_list li a:hover {
+    text-decoration: underline;
+}
+

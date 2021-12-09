@@ -6,10 +6,12 @@ import SubscriptionsPage from "./Pages/SubscriptionsPage";
 import FollowingsPage from "./Pages/FollowingsPage";
 import SignupPage from "./Pages/SignupPage";
 import ChallengePage from "./Pages/ChallengePage";
+import Header from "./components/Header";
 
 function App() {
     return (
         <div className="app_wrapper">
+            <Header />
             <Router>
                 <Switch>
                     <Redirect from="/" to={`/user`} exact/>
