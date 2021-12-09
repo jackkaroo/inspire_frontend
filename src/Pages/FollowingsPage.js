@@ -1,6 +1,6 @@
 import React from 'react';
 import {useEffect, useState} from "react";
-import {CircularProgress} from "@material-ui/core";
+import {CircularProgress, Container} from "@material-ui/core";
 import UserFollowingItem from "../components/UserFollowingItem";
 import {getFollowingsData} from "../services/api";
 
@@ -14,6 +14,7 @@ export default function FollowingsPage() {
         setLoading(true)
         getFollowingsData(userId)
             .then((data) => {
+                console.log(data)
                 return setFollowingsData(data);
             })
             .catch(() => console.log('Something goes wrong..'))
@@ -28,9 +29,10 @@ export default function FollowingsPage() {
                         <CircularProgress/>
                     </div>
                 )
-                : (followingsData && followingsData.length) ? followingsData.map(following =>
-                        <UserFollowingItem props={{whom:following.whom, whomId:following.whomId}} userId={userId}/>)
-                    : <h1>You have not subscribed to any challenges yet.</h1>
+                :
+                    (Array.isArray(followingsData) && followingsData.length) ? followingsData.map(f =>
+                        <UserFollowingItem props={{whom: f.whom, whomId: f.whomId}} userId={userId}/>)
+                    : <h1>You don't have any followings.</h1>
             }
         </>
     )

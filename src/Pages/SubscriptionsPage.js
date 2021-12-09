@@ -14,6 +14,7 @@ export default function SubscriptionsPage() {
         setLoading(true)
         getSubscriptionsData(userId)
             .then((data) => {
+                console.log(data)
                 return setSubscriptionsData(data);
             })
             .catch(() => console.log('Something goes wrong..'))
@@ -28,7 +29,7 @@ export default function SubscriptionsPage() {
                         <CircularProgress/>
                     </div>
                 )
-                : (subscriptionsData && subscriptionsData.length) ? subscriptionsData.map(subscription =>
+                : (Array.isArray(subscriptionsData) && subscriptionsData.length) ? subscriptionsData.map(subscription =>
                 <ChallengeSubscriptionItem key={subscription.challenge.id} challenge={subscription.challenge} userId={userId}/>)
                     : <h1>You have not subscribed to any challenges yet.</h1>
             }
