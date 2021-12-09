@@ -3,19 +3,15 @@ import {Button, IconButton, Input, InputAdornment, InputLabel} from "@material-u
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff'
 import '../styles/login_page.css';
-import {validateEmail, validatePassword} from "../utils/validation";
 import {useHistory} from "react-router-dom";
 import jwt_decode from 'jwt-decode';
 import {authorizeUser} from "../services/authorizeUser";
 
 export default function LoginPage() {
   const [values, setValues] = useState({
-    showPassword: false,
     email: '',
     password: '',
   });
-  const [emailError, setEmailError] = useState(null);
-  const [passwordError, setPasswordError] = useState(null);
 
   const history = useHistory();
 
@@ -33,26 +29,15 @@ export default function LoginPage() {
 
   const handleSubmitForm = (event) => {
     event.preventDefault();
-
-    if (!validateEmail(values.email)) {
-      setEmailError(true);
-    } else setEmailError(false);
-
-    if (!validatePassword(values.password)) {
-      setPasswordError(true);
-    } else setPasswordError(false);
-
-    if (emailError === false && passwordError === false) {
-      authorizeUser({email: values.email, password: values.password})
-        .then((data) => {
-          const user = jwt_decode(data.token);
-          window.localStorage.setItem('token', data.token);
-          window.localStorage.setItem('user', user.id);
-          history.push("/user");
-          return user;
-        })
-        .catch(() => alert('Incorrect login or password. Try again.'))
-    }
+    authorizeUser({email: values.email, password: values.password})
+      .then((data) => {
+        const user = jwt_decode(data.token);
+        window.localStorage.setItem('token', data.token);
+        window.localStorage.setItem('user', user.id);
+        history.push("/user");
+        return user;
+      })
+      .catch(() => alert('Incorrect login or password. Try again.'))
   }
 
     return (
@@ -66,9 +51,7 @@ export default function LoginPage() {
               value={values.email}
               onChange={handleChange('email')}
               className='input'
-              error={emailError === true}
             />
-            {emailError === true && 'Please enter valid email'}
             <InputLabel htmlFor="standard-adornment-password" className='label'>Password</InputLabel>
             <Input
               id="standard-adornment-password"
@@ -87,9 +70,7 @@ export default function LoginPage() {
                   </IconButton>
                 </InputAdornment>
               }
-              error={passwordError === true}
             />
-            {passwordError === true && 'Password length should be more than 3 symbols'}
             <Button variant="contained" color="primary" className="button" type="submit">
               Login
             </Button>

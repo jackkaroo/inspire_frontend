@@ -11,8 +11,8 @@ import Header from "./components/Header";
 function App() {
     return (
         <div className="app_wrapper">
-            <Header />
             <Router>
+                <Header />
                 <Switch>
                     <Redirect from="/" to={`/user`} exact/>
                     <Route path="/login" exact component={LoginPage}/>
