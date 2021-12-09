@@ -13,6 +13,18 @@ export const getUserData = async (userId) => {
 };
 
 export const getFollowingsData = async (userId) => {
+  const url = `${API_URL}/followings?whomId=${userId}`;
+  const data = await fetch(url, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': 'Basic ' + localStorage.getItem('token')
+    },
+  });
+  return data.json();
+};
+
+export const getFollowingsDataWHO = async (userId) => {
   const url = `${API_URL}/followings?whoId=${userId}`;
   const data = await fetch(url, {
     method: 'GET',
@@ -50,6 +62,19 @@ export const getChallenge = async (challengeId) => {
 
 export const postChallenge = async (data = {}) => {
   const url = `${API_URL}/challenges`;
+  const response = await fetch(url, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': 'Basic ' + localStorage.getItem('token')
+    },
+    body: JSON.stringify(data),
+  });
+  return response.json();
+}
+
+export const postSubscribeToChallenge = async (data = {}) => {
+  const url = `${API_URL}/subscriptions`;
   const response = await fetch(url, {
     method: 'POST',
     headers: {
@@ -148,6 +173,19 @@ export const postMilestone = async (data = {}) => {
   return response.json();
 }
 
+export const postFollow = async (data = {}) => {
+  const url = `${API_URL}/followings`;
+  const response = await fetch(url, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': 'Basic ' + localStorage.getItem('token')
+    },
+    body: JSON.stringify(data),
+  });
+  return response.json();
+}
+
 export const getMilestonesData = async (challengeId) => {
   const url = `${API_URL}/milestones?challengeId=${challengeId}`;
   const data = await fetch(url, {
@@ -158,4 +196,18 @@ export const getMilestonesData = async (challengeId) => {
     },
   });
   return data.json();
+};
+
+export const getFeedChallengesData = async (userId) => {
+  const url = `${API_URL}/challenges?parentId=null`;
+  const data = await fetch(url, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': 'Basic ' + localStorage.getItem('token')
+    },
+  });
+  const result = (await data.json()).filter(challenge => challenge.userId != userId)
+  console.log(result)
+  return result;
 };
